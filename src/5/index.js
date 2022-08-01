@@ -7,7 +7,7 @@ const numberHandler = () => {
         return;
     }
 
-    const myNumberCustom = myNumber.split('').join(" ");
+    const myNumberCustom = myNumber.split('').join(' ');
 
     alert(`Результат: ${myNumberCustom}`);
     console.log('debug myNumberCustom', myNumberCustom);
