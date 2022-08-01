@@ -1,7 +1,7 @@
 const startBtnElement = document.querySelector('#startBtn');
 
 const numberHandler = () => {
-    const myNumber = prompt('Введите первую строку');
+    const myNumber = prompt('Введите число');
 
     if (!myNumber) {
         return;
