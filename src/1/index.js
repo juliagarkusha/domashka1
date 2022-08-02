@@ -1,14 +1,52 @@
 const calcStartElement = document.querySelector('#calcStart');
 
-const calculatorCalcHandler = (operator, number1, number2) => {
+const getPromptNumber = (message = '') => {
+    const userNumber = prompt(message);
+
+    if(userNumber === null) {
+        return;
+    }
+
+    if(!userNumber.length) {
+        alert('Вы не ввели число. Попробуйте еще раз');
+        return getPromptNumber(message);
+    }
+
+    if(!(+userNumber) && userNumber !== '0') {
+        alert('Вы ввели некоректное число. Попробуйте еще раз');
+        return getPromptNumber(message);
+    }
+
+    return userNumber;
+}
+
+const getPromptOperator = (message = '') => {
+    const operator = prompt(message);
+    const validOperators = ['+', '-', '/', '*'];
+
+    if(operator === null) {
+        return;
+    }
+
     if(!operator.length) {
-        return 'Для дальнейшей работы с числами сначала введите оператор';
+        alert('Для дальнейшей работы с числами сначала введите оператор');
+        return getPromptOperator(message);
     }
 
     if(operator.length > 1) {
-        return 'Ошибка! Вы не ввели не корректное значение оператора';
+        alert('Ошибка! Вы не ввели не корректное значение оператора');
+        return getPromptOperator(message);
     }
 
+    if(!validOperators.includes(operator)) {
+        alert(`Ошибка! Введенный вами оператор "${operator}" не яаляется валидным`);
+        return getPromptOperator(message);
+    }
+
+    return operator;
+}
+
+const calculatorCalcHandler = (operator, number1, number2) => {
     switch (operator) {
         case "+":
             return number1 + number2;
@@ -19,12 +57,12 @@ const calculatorCalcHandler = (operator, number1, number2) => {
         case "-":
             return number1 - number2;
         default:
-            return 'Ошибка! Вы не ввели не корректное значение оператора';
+            return;
     }
 }
 
 const calculatorViewHandler = () => {
-    const operator = prompt(`Введите оператор: 
+    const operator = getPromptOperator(`Введите оператор: 
       + (для сложения), 
       / (для деления), 
       * (для умножения), 
@@ -32,32 +70,19 @@ const calculatorViewHandler = () => {
      `
     );
 
-    if(!operator) {
-        alert('Для дальнейшей работы с числами сначала введите оператор');
+    if(operator === undefined) {
         return;
     }
 
-    const firstNumber = prompt('Введите первое число');
+    const firstNumber = getPromptNumber('Введите первое число');
 
-    if(!firstNumber) {
-        alert('Вы не ввели число. Попробуйте еще раз');
+    if(firstNumber === undefined) {
         return;
     }
 
-    if(!(+firstNumber) && firstNumber !== '0') {
-        alert('Вы ввели некоректное число. Попробуйте еще раз');
-        return;
-    }
+    const secondNumber = getPromptNumber('Введите второе число');
 
-    const secondNumber = prompt('Введите второе число');
-
-    if(!secondNumber) {
-        alert('Вы не ввели число. Попробуйте еще раз');
-        return;
-    }
-
-    if(!(+secondNumber) && secondNumber !== '0') {
-        alert('Вы ввели некоректное число. Попробуйте еще раз');
+    if(secondNumber === undefined) {
         return;
     }
 
